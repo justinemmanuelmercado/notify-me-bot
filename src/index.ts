@@ -1,18 +1,36 @@
 import dotenv from 'dotenv'
-import { DiscordController } from './discord-controller'
-import { mock } from './mock-notifs'
+import { DiscordControllerClass } from './discord-controller'
+import { RedditWatcherControllerClass } from './reddit-watcher-controller'
+
+import { Notification } from './interfaces/Notification'
 dotenv.config()
 
 async function main() {
-  const dc = await DiscordController.build()
-  if (!dc) {
+  const discordController = await DiscordControllerClass.build()
+  const redditController = new RedditWatcherControllerClass()
+
+  if (!discordController || !redditController) {
+    console.error('Controller can\'t be established')
     return
   }
-  for (const mockNotif in mock) {
-    const el = mock[mockNotif]
-    await dc.send(el)
+
+  redditController.notify = async (notification: Notification) => {
+    try {
+      await discordController.send(notification)
+      return true
+    } catch {
+      throw new Error('Failed sending message')
+    }
   }
+
+  redditController.createWatcher([], 'post')
+  redditController.createWatcher([], 'post')
+  redditController.createWatcher([], 'post')
+  redditController.createWatcher([], 'post')
+  redditController.createWatcher([], 'post')
+
+  redditController.runWatchers()
 }
-(async () => {
-  await main()
+(() => {
+  main()
 })()

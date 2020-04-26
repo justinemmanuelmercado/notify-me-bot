@@ -1,16 +1,16 @@
 import { Notification } from './interfaces/Notification'
-import { Channel } from './interfaces/Channel';
+import { Channel } from './interfaces/Channel'
 
 const generalChannel: Channel = {
   name: 'general',
-  id: '513923285898100767'
+  id: process.env.GENERAL_CHANNEL_ID || ''
 }
 
 export const mock: Notification[] = [
   {
     id: '1',
     title: 'New stuff here',
-    body: 'Here check this stuff',
+    body: '__Here check this stuff__',
     channel: generalChannel
   },
   {
