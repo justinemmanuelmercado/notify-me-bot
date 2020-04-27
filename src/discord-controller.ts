@@ -1,7 +1,7 @@
-import { DiscordController } from './interfaces/DiscordController'
+import { DiscordController } from './interface/DiscordController'
 import { Guild, Client, GuildChannel, TextChannel } from 'discord.js'
-import { Notification } from './interfaces/Notification'
-import { Channel } from './interfaces/Channel'
+import { Notification } from './interface/Notification'
+import { Channel } from './interface/Channel'
 
 export class DiscordControllerClass implements DiscordController {
   private _client: Client;
