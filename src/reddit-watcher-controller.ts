@@ -3,8 +3,8 @@ import { RedditWatcherController } from './interface/RedditWatcherController'
 import { Notification } from './interface/Notification'
 import Snoowrap, { Submission, Comment } from 'snoowrap'
 import { CommentStream, SubmissionStream } from 'snoostorm'
-
-type Notifier = (notif: Notification) => Promise<boolean>
+import { watchMatchPostRunner } from './runner/match-posts-runner'
+export type Notifier = (notif: Notification) => Promise<boolean>
 
 export class RedditWatcherControllerClass implements RedditWatcherController {
   constructor(notifier: Notifier) {
@@ -70,30 +70,6 @@ function watchMatchCommentRunner(stream: CommentStream, watcher: RedditWatcher, 
         id: itm.id,
         channel: watcher.channel,
         title: 'New Comment'
-      }
-      await notify(notif)
-      console.log(body)
-    }
-  })
-}
-
-function watchMatchPostRunner(stream: SubmissionStream, watcher: RedditWatcher, notify: Notifier) {
-  stream.on('item', async (itm: Submission) => {
-    if (new RegExp(watcher.criteria.join('|')).test(itm.selftext.toLowerCase()) || new RegExp(watcher.criteria.join('|')).test(itm.title.toLowerCase())) {
-      const d = new Date(itm.created_utc * 1000)
-      const body = `
-      SUBMISSION
-      title: ${itm.title}
-      url: ${itm.permalink}
-      selftext: ${itm.selftext}
-      date_posted: ${d.toLocaleString()}
-      criteria: ${watcher.criteria.join(' | ')}
-    `
-      const notif: Notification = {
-        body,
-        id: itm.id,
-        channel: watcher.channel,
-        title: itm.title
       }
       await notify(notif)
       console.log(body)
