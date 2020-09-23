@@ -13,8 +13,9 @@ async function main() {
     try {
       await discordController.send(notification)
       return true
-    } catch {
-      throw new Error('Failed sending message')
+    } catch (e) {
+      console.error(e)
+      return false
     }
   }
 
@@ -28,5 +29,9 @@ async function main() {
   redditController.runWatchers()
 }
 (() => {
-  main()
+  try {
+    main()
+  } catch (e) {
+    console.log(e)
+  }
 })()

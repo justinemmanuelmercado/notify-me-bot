@@ -1,7 +1,6 @@
 import { DiscordController } from './interface/DiscordController'
-import { Guild, Client, GuildChannel, TextChannel } from 'discord.js'
+import { Guild, Client, TextChannel, Channel as ChannelInterface } from 'discord.js'
 import { Notification } from './interface/Notification'
-import { Channel } from './interface/Channel'
 
 export class DiscordControllerClass implements DiscordController {
   private _client: Client;
@@ -28,10 +27,10 @@ export class DiscordControllerClass implements DiscordController {
       const { channel } = notification
       const toChannel = await this.guild.channels.cache.find(chn => chn.name === channel.name)?.fetch()
       if (isTextChannel(toChannel)) {
-        await toChannel?.send(notification.body)
+        await toChannel?.send(notification.body.substring(0, 1999))
       }
-    } catch {
-      throw new Error('Can\'t send message')
+    } catch (e) {
+      throw new Error(e)
     }
   }
 
@@ -47,6 +46,6 @@ export class DiscordControllerClass implements DiscordController {
   }
 }
 
-function isTextChannel(x?: GuildChannel): x is TextChannel {
+function isTextChannel(x?: ChannelInterface): x is TextChannel {
   return x?.type === 'text'
 }

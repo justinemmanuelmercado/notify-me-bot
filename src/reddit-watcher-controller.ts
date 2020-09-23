@@ -1,7 +1,7 @@
 import { RedditWatcher } from './interface/RedditWatcher'
 import { RedditWatcherController } from './interface/RedditWatcherController'
 import { Notification } from './interface/Notification'
-import Snoowrap, { Submission, Comment } from 'snoowrap'
+import Snoowrap, { Comment } from 'snoowrap'
 import { CommentStream, SubmissionStream } from 'snoostorm'
 import { watchMatchPostRunner } from './runner/match-posts-runner'
 export type Notifier = (notif: Notification) => Promise<boolean>

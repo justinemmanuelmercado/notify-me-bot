@@ -3,8 +3,12 @@ import { RedditWatcher, CriteriaPair } from '../interface/RedditWatcher'
 import { SubmissionStream } from 'snoostorm'
 import { Submission } from 'snoowrap'
 import { Notifier } from '../reddit-watcher-controller'
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+TimeAgo.addLocale(en)
 
 export function watchMatchPostRunner(stream: SubmissionStream, watcher: RedditWatcher, notify: Notifier) {
+  const timeAgo = new TimeAgo('en-US')
   stream.on('item', async (itm: Submission) => {
     let result: boolean = false
     watcher.criteria.some((criterion: CriteriaPair) => {
@@ -17,12 +21,12 @@ export function watchMatchPostRunner(stream: SubmissionStream, watcher: RedditWa
     if (result) {
       const d = new Date(itm.created_utc * 1000)
       const body = `
-      **${watcher.message.title}**
-      [${itm.title}](${itm.url})
-      \`\`\`
-      ${itm.selftext}
-      \`\`\`
-      ${d.toLocaleString()}
+      [**${watcher.message.title}**] (${timeAgo.format(d)})
+      **${itm.title}**
+      ${itm.url}
+      ${d.toLocaleString()} 
+      --------------------------------------------
+      --------------------------------------------
     `
       const notif: Notification = {
         body,

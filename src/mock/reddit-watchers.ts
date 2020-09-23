@@ -16,37 +16,45 @@ const fgmCriteria: Criteria = [
   ])
 ]
 
-const tg4botsCriteria: Criteria = [
+const forHireCriteria: Criteria = [
   new Map([
-    ['title' as CriteriaType, ['this must be in the title']]
-  ]),
-  new Map([
-    ['title' as CriteriaType, ['if this is in the title']],
-    ['body' as CriteriaType, ['then this should be in the body', 'or this should be in the body']]
+    ['title' as CriteriaType, ['Hiring', 'hiring']],
+    ['body' as CriteriaType, ['react', 'website', 'React', 'typescript', 'Typescript', 'node', 'nodejs', 'express', 'vue', 'frontend', 'backend']]
   ])
 ]
+
+// const tg4botsCriteria: Criteria = [
+//   new Map([
+//     ['title' as CriteriaType, ['[criteria]']],
+//     ['body' as CriteriaType, ['criteria 2', 'criteria 1']]
+//   ]),
+//   new Map([
+//     ['title' as CriteriaType, ['if this is in the title']],
+//     ['body' as CriteriaType, ['then this should be in the body', 'or this should be in the body']]
+//   ])
+// ]
 
 export const redditWatchers: RedditWatcher[] = [
   {
     type: 'post',
-    subreddit: 'frugalmalefashion',
+    subreddit: 'forhire',
     action: 'match',
-    criteria: fgmCriteria,
+    criteria: forHireCriteria,
     channel: GENERAL_CHANNEL,
     message: {
-      title: 'Found some boots in /r/frugalmalefashion',
-      body: 'Check it out, this is just a test by the way'
+      title: 'FORHIRE',
+      body: ''
     }
   },
   {
     type: 'post',
-    subreddit: 'testingground4bots',
+    subreddit: 'remotejs',
     action: 'match',
-    criteria: tg4botsCriteria,
+    criteria: forHireCriteria,
     channel: GENERAL_CHANNEL,
     message: {
-      title: 'Found some tests in /r/testingground4bots',
-      body: 'Check it out, this is just a test by the way'
+      title: 'REMOTEJS',
+      body: ''
     }
   }
 ]
