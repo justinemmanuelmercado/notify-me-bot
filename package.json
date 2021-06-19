@@ -8,7 +8,7 @@
     "start": "nodemon -e ts -w ./src -x npm run watch:serve",
     "watch:serve": "npm run lint && node --inspect -r ts-node/register src/index.ts",
     "build": "rm -rf lib && tsc",
-    "build:pm2": "npm run build && pm2 lib/index.js",
+    "build:pm2": "npm run build && pm2 start lib/index.js",
     "lint": "eslint 'src/**'"
   },
   "author": "",
