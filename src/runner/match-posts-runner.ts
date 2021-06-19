@@ -21,12 +21,10 @@ export function watchMatchPostRunner(stream: SubmissionStream, watcher: RedditWa
     if (result) {
       const d = new Date(itm.created_utc * 1000)
       const body = `
-      [**${watcher.message.title}**] (${timeAgo.format(d)})
+      [**${watcher.message.title}**] 
       **${itm.title}**
       ${itm.url}
       ${d.toLocaleString()} 
-      --------------------------------------------
-      --------------------------------------------
     `
       const notif: Notification = {
         body,
